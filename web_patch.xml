@@ -1,0 +1,78 @@
+--- web_orig.xml	2020-09-30 20:23:13.934812755 +0200
++++ web.xml	2020-09-30 20:19:17.678764485 +0200
+@@ -1,4 +1,4 @@
+-?xml version="1.0" encoding="UTF-8"?>
++<?xml version="1.0" encoding="UTF-8"?>
+ 
+ <!--
+  * See the NOTICE file distributed with this work for additional
+@@ -30,6 +30,69 @@
+     version="3.0"
+     metadata-complete="true">
+ 
++  <filter>
++    <filter-name>UrlRewriteFilter</filter-name>
++    <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
++  </filter>
++  <filter-mapping>
++    <filter-name>UrlRewriteFilter</filter-name>
++    <url-pattern>/*</url-pattern>
++    <dispatcher>REQUEST</dispatcher>
++    <dispatcher>FORWARD</dispatcher>
++  </filter-mapping>
++
++  <urlrewrite decode-using="null">
++    <rule>
++      <note>
++       Ensure that URLs ending with .gwtrpc are not modified.
++       Note: Not needed with XWiki 9.7+ since the GWT editor has been removed.
++      </note>
++      <from>^/(.*)\.gwtrpc$</from>
++      <to type="forward" last="true">-</to>
++    </rule>
++
++    <rule>
++      <note>
++        Ensure that URLs that must not be served by the Struts Servlet are not modified.
++      </note>
++      <from>^/((bin|resources|skins|asyncrenderer|rest|webdav|xmlrpc|wiki|webjars)/(.*)|robots\.txt)$</from>
++      <to type="forward" last="true">-</to>
++    </rule>
++
++    <rule>
++      <note>
++        For all other URLs we prepend the "/bin/" prefix so that they get routed to the XWiki Action Servlet.
++      </note>
++      <from>^/(.*)$</from>
++      <to type="forward">/bin/$1</to>
++    </rule>
++
++    <outbound-rule>
++      <note>
++        Rewrite outbound URLs to remove the "/bin" part when there are two paths after it.
++      </note>
++      <from>/bin/(.*)/(.*)$</from>
++      <to>/$1/$2</to>
++    </outbound-rule>
++
++    <outbound-rule>
++      <note>
++        Rewrite outbound URLs to remove the "/bin" part when there's a single path after it.
++      </note>
++      <from>/bin/(.*)$</from>
++      <to>/$1</to>
++    </outbound-rule>
++
++    <outbound-rule>
++      <note>
++        Rewrite outbound URLs to remove the "/bin" part it's the last path.
++      </note>
++      <from>/bin$</from>
++      <to>/</to>
++    </outbound-rule>
++
++  </urlrewrite>
++
+   <!-- "absolute-ordering" specifies which web fragment JARs (according to the names in their WEB-INF/web-fragment.xml
+        files) have to be scanned for SCIs (javax.servlet.ServletContainerInitializer), fragments and annotations.
+        An empty <absolute-ordering/> element configures that none are to be scanned, thus leading to a faster
