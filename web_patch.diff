@@ -1,11 +1,5 @@
---- web_orig.xml	2020-09-30 20:23:13.934812755 +0200
-+++ web.xml	2020-09-30 20:19:17.678764485 +0200
-@@ -1,4 +1,4 @@
--?xml version="1.0" encoding="UTF-8"?>
-+<?xml version="1.0" encoding="UTF-8"?>
- 
- <!--
-  * See the NOTICE file distributed with this work for additional
+--- web_orig.xml	2020-10-01 07:45:31.897348954 +0200
++++ web.xml	2020-10-01 07:42:04.075446495 +0200
 @@ -30,6 +30,69 @@
      version="3.0"
      metadata-complete="true">
@@ -76,3 +70,12 @@
    <!-- "absolute-ordering" specifies which web fragment JARs (according to the names in their WEB-INF/web-fragment.xml
         files) have to be scanned for SCIs (javax.servlet.ServletContainerInitializer), fragments and annotations.
         An empty <absolute-ordering/> element configures that none are to be scanned, thus leading to a faster
+@@ -381,7 +444,7 @@
+ 
+   <error-page>
+     <error-code>404</error-code>
+-    <location>/bin/view/Main/DocumentDoesNotExist</location>
++    <location>/bin/Main/DocumentDoesNotExist</location>
+   </error-page>
+ 
+   <!-- Uncomment if you wish to use a DataSource to define the Database connection
