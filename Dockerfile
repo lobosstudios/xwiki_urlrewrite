@@ -6,4 +6,4 @@ RUN apt-get update && \
     patch && \
   rm -rf /var/lib/apt/lists/*
 ADD ./web_patch.diff /
-RUN patch /usr/local/tomcat/webapps/ROOT/WEB-INF/web.xml web_patch.diff
+RUN patch /usr/local/tomcat/webapps/ROOT/WEB-INF/web.xml /web_patch.diff
