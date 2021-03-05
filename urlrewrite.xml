@@ -2,16 +2,6 @@
 <!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN"
         "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
 <urlrewrite decode-using="null">
-
-  <rule>
-    <note>
-     Ensure that URLs ending with .gwtrpc are not modified.
-     Note: Not needed with XWiki 9.7+ since the GWT editor has been removed.
-    </note>
-    <from>^/(.*)\.gwtrpc$</from>
-    <to type="forward" last="true">-</to>
-  </rule>
-
   <rule>
     <note>
       Ensure that URLs that must not be served by the Struts Servlet are not modified.
