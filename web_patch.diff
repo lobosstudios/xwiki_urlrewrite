@@ -1,21 +1,24 @@
---- web_orig.xml	2020-10-01 08:21:56.420682760 +0200
-+++ web.xml	2020-10-01 08:22:23.957800407 +0200
-@@ -30,6 +30,17 @@
-     version="3.0"
-     metadata-complete="true">
- 
-+  <filter>
-+    <filter-name>UrlRewriteFilter</filter-name>
-+    <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
-+    <logLevel>sysout:DEBUG</logLevel>
-+  </filter>
-+  <filter-mapping>
-+    <filter-name>UrlRewriteFilter</filter-name>
-+    <url-pattern>/*</url-pattern>
-+    <dispatcher>REQUEST</dispatcher>
-+    <dispatcher>FORWARD</dispatcher>
-+  </filter-mapping>
-+
-   <!-- "absolute-ordering" specifies which web fragment JARs (according to the names in their WEB-INF/web-fragment.xml
-        files) have to be scanned for SCIs (javax.servlet.ServletContainerInitializer), fragments and annotations.
-        An empty <absolute-ordering/> element configures that none are to be scanned, thus leading to a faster
+*** /usr/local/xwiki/web.xml.orig	2023-06-29 21:01:52.043824600 +0000
+--- web.xml	2023-06-29 21:03:52.065361881 +0000
+***************
+*** 50,55 ****
+--- 50,68 ----
+      <filter-class>org.xwiki.resource.servlet.RoutingFilter</filter-class>
+    </filter>
+  
++   <!-- URL rewriting filter (for short URLs) -->
++   <filter>
++     <filter-name>UrlRewriteFilter</filter-name>
++     <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
++     <logLevel>sysout:DEBUG</logLevel>
++    </filter>
++    <filter-mapping>
++      <filter-name>UrlRewriteFilter</filter-name>
++      <url-pattern>/*</url-pattern>
++      <dispatcher>REQUEST</dispatcher>
++      <dispatcher>FORWARD</dispatcher>
++    </filter-mapping>
++ 
+    <!-- Filter that sets a custom encoding to all requests, since usually clients don't specify
+         the encoding used for submitting the request, so by default containers fall back to the
+         encoding globally configured in their settings. This allows XWiki to use a custom encoding,
