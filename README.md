@@ -1,4 +1,4 @@
-# xwiki_urlrewrite - XWiki Docker Image with Short URLs
+# xwiki_urlrewrite - Build an XWiki Docker Image with Short URLs Enabled
 
 This is an update to the original work at **Horten-Folkeverksted/xwiki_urlrewrite**. The original repo 
 has been archived, with no commits for at least two years (as of today's date - 2023-06-29).
